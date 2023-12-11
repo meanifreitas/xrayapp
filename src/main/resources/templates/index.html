@@ -42,17 +42,17 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="#" th:action="@{/login}" th:object="${usuario}">
+                    <form th:action="@{/login}" method="post" th:object="${usuario}">
                         <div class="field">
                             <label class="label">CPF</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Seu CPF">
+                                <input class="input" type="text" th:field="*{cpf}" placeholder="Seu CPF">
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">Senha</label>
                             <div class="control">
-                                <input class="input" type="password" placeholder="Sua senha">
+                                <input class="input" type="password" th:field="*{senha}" placeholder="Sua senha">
                             </div>
                         </div>
                         <div class="field">
@@ -61,6 +61,7 @@
                             </div>
                         </div>
                     </form>
+                    <span th:if="${erro}" th:text="${erro}"></span>
                 </div>
             </div>
         </div>
