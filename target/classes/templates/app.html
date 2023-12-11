@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml" th:fragment="layout (conteudo)">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - CRUD SITE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand is-flex is-align-items-center">
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a>
+                            <!-- Botão descomentado para alternar o tema: <button class="button" onclick="toggleTheme()">Alternar Tema</button> -->
+                        </a>
+                        <a class="button" href="#">
+                            Ajuda
+                        </a>
+                        <a id="contatoButton" class="button" href="#">
+                            Contato
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    RadEASKCalc.com
+                </h1>
+            </div>
+        </div>
+    </section>
+</header>
+<section class="hero is-light is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                    <form action="#" th:action="@{/cadastrar}" th:object="${usuario}">
+                        <div class="field">
+                            <label class="label">Nome</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Nome" th:field:="*{nome}" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">CPF</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="CPF" th:field:="*{cpf}" required>
+                            </div>
+                        </div>
+                        aaaaaa
+                        <div class="field">
+                            <label class="label">Senha</label>
+                            <div class="control">
+                                <input class="input" type="password" placeholder="Sua senha" th:field="*{senha}" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary is-fullwidth">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="content has-text-centered">
+    </div>
+</footer>
+<script>
+    // Adiciona um ouvinte de evento para o botão de contato
+    document.getElementById('contatoButton').addEventListener('click', function() {
+        // Mensagem de contato dos criadores
+        var mensagemContato = "Criadores:\n\nRoger da Palma - Email rogerdapalma@gmail.com\n" +
+            "Meani Freitas - Email meani.sf@gmail.com " + "\nGuilherme Painko - Email gui.painko2393@gmail.com ";
+
+        // Exibe a mensagem na tela (pode ser adaptado para usar um modal)
+        alert(mensagemContato);
+    });
+
+</script>
+</body>
+</html>
