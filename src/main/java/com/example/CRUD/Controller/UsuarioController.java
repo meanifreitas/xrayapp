@@ -3,7 +3,7 @@ package com.example.CRUD.Controller;
 
 import com.example.CRUD.Repository.UsuarioRepository;
 import com.example.CRUD.Model.Usuario;
-import com.example.CRUD.Services.AutenticacaoService;
+import com.example.CRUD.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +15,7 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private AutenticacaoService autenticacaoService;
+    private UsuarioService usuarioService;
 
     @GetMapping("/cadastrar")
     public String formularioCadastro(Model model) {
@@ -27,7 +26,7 @@ public class UsuarioController {
     @PostMapping ("/cadastrar")
     public String salvarUsuario (@ModelAttribute Usuario usuario){
         usuarioRepository.save(usuario);
-        return "index" ;
+        return "index";
     }
 
     @GetMapping("/login")
@@ -36,11 +35,16 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String processarLogin(@RequestParam String cpf, @RequestParam String senha, Model model) {
-        if (autenticacaoService.autenticar(cpf, senha)) {
-            return "redirect:/template";
+    public String login(@RequestParam("cpf") String cpf,
+                        @RequestParam("senha") String senha,
+                        Model model) {
+
+        boolean isValidUser = usuarioService.autenticar(cpf, senha);
+
+        if (isValidUser) {
+            return "redirect:/app";
         } else {
-            model.addAttribute("erro", "CPF ou senha inválidos");
+            model.addAttribute("loginError", "CPF ou senha inválidos");
             return "login";
         }
     }

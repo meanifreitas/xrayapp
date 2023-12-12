@@ -42,7 +42,7 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form th:action="@{/login}" method="post" th:object="${usuario}">
+                    <!--<form action="#" th:action="@{/login}" method="post">
                         <div class="field">
                             <label class="label">CPF</label>
                             <div class="control">
@@ -60,8 +60,26 @@
                                 <button class="button is-primary is-fullwidth" type="submit">Login</button>
                             </div>
                         </div>
+                    </form>-->
+                    <form action="#" th:action="@{/login}" method="post">
+                        <div class="field">
+                            <label class="label">CPF</label>
+                            <div class="control">
+                                <input class="input" type="text" if="cpf" name="cpf" placeholder="Seu CPF">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Senha</label>
+                            <div class="control">
+                                <input class="input" type="password" id="senha" name="senha" placeholder="Sua senha">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary is-fullwidth" type="submit">Login</button>
+                            </div>
+                        </div>
                     </form>
-                    <span th:if="${erro}" th:text="${erro}"></span>
                 </div>
             </div>
         </div>
