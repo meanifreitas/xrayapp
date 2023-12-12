@@ -128,9 +128,13 @@
                     <a id="contatoButton" class="button" href="#">
                         Contato
                     </a>
-                    <a id="logoutButton" class="button is-danger" href="#">
-                        Logout
-                    </a>
+                    <form action="#" th:action="@{/logout}" method="post">
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary is-fullwidth" type="submit">Logout</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

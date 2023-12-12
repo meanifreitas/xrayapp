@@ -30,6 +30,11 @@ public class UsuarioController {
         return "index";
     }
 
+    @PostMapping ("/logout")
+    public String loguoutUsuario (){
+        return "index";
+    }
+
     @GetMapping("/login")
     public String mostrarFormularioDeLogin() {
         return "login";
