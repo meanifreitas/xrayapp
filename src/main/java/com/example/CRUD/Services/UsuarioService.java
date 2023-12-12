@@ -10,12 +10,13 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
-
     @Autowired
-    private UsuarioRepository usuarioRepository; // Repositório para interagir com o banco de dados
+    private UsuarioRepository usuarioRepository;
 
     public boolean autenticar(String cpf, String senha) {
-        Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));;
-        return usuario != null; //&& usuario.getSenha().equals(senha);
+        System.out.println(cpf);
+        return usuarioRepository.findByCpf(cpf)
+                .map(usuario -> usuario.getSenha().equals(senha))
+                .orElse(false);
     }
 }

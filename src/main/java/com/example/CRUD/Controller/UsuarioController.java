@@ -36,19 +36,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("cpf") String cpf,
-                        @RequestParam("senha") String senha,
-                        Model model) {
-
-        boolean isValidUser = usuarioService.autenticar(cpf, senha);
-
-        /*if (isValidUser) {
-            return "/app";
+    public String login(@RequestParam String cpf, @RequestParam String senha, Model model) {
+        if (usuarioService.autenticar(cpf, senha)) {
+            return "app";
         } else {
-            model.addAttribute("loginError", "CPF ou senha inválidos");
-            return "login";
-        }*/
-        return "app";
+            model.addAttribute("error", "CPF ou senha inválidos");
+            return "error";
+        }
     }
 
     @GetMapping("/listar")
@@ -56,13 +50,6 @@ public class UsuarioController {
         List<Usuario> listaUsuario = (List<Usuario>) usuarioRepository.findAll();
         model.addAttribute("usuarios",listaUsuario);
         return "listar";
-    }
-
-    @GetMapping ("/alterar/{id}" )
-    public String altPessoa(@PathVariable Long id, Model model) {
-        Usuario usuario = usuarioRepository .findById(Math.toIntExact(id)).get();
-        model.addAttribute( "usuario", usuario);
-        return "alterar" ;
     }
 
     @PostMapping ("/alterar")

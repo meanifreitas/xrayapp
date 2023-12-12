@@ -14,7 +14,7 @@
                 Oops! Algo deu errado.
             </h1>
             <h2 class="subtitle">
-                O recurso solicitado não foi encontrado.
+                <div th:if="${error}" th:text="${error}"></div>
             </h2>
         </div>
     </div>
