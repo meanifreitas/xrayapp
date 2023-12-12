@@ -14,7 +14,6 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public boolean autenticar(String cpf, String senha) {
-        System.out.println(cpf);
         return usuarioRepository.findByCpf(cpf)
                 .map(usuario -> usuario.getSenha().equals(senha))
                 .orElse(false);

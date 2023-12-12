@@ -191,6 +191,34 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Campo para inserir o rendimento -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Rendimento:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" id="rendimento" class="input" placeholder="Digite o rendimento">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campo para inserir o bsf -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">BSF:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" id="bsf" class="input" placeholder="Digite o bsf">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -247,9 +275,6 @@
 
                 <!-- Adiciona o resultado do cálculo -->
                 <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Resultado:</label>
-                    </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
@@ -267,18 +292,25 @@
 <script>
     // Função para realizar o cálculo
     function calcular() {
-        // Obter os valores dos sliders e da espessura
-        var kv = parseInt(document.getElementById('kvInput').value);
-        var ms = parseInt(document.getElementById('msInput').value);
-        var ma = parseInt(document.getElementById('maInput').value);
-        var espessura = parseFloat(document.getElementById('espessura').value.replace(',', '.'));
+        let dfs;
+        let regiao = document.getElementById('regiao').value;
+        let espessura = document.getElementById('espessura').value.replaceAll(',', '');
+        let ma = document.getElementById('maInput').value;
+        let kv = document.getElementById('kvInput').value;
+        let ms = document.getElementById('msInput').value;
+        let rendimento = document.getElementById('rendimento').value;
+        let bsf = document.getElementById('bsf').value;
 
-        // Chame a função de cálculo desejada aqui
-        // Exemplo: var resultado = calcularResultado(kv, ms, ma, espessura);
+        if (regiao == 'torax') {
+            dfs = 180 - espessura;
+        } else {
+            dfs = 100 - espessura;
+        }
 
-        // Exemplo de exibição do resultado
+        const esak = rendimento * (Math.pow((80/dfs),2)) * ma * bsf;
+
         var resultadoElement = document.getElementById('resultado');
-        resultadoElement.innerHTML = '<strong>Resultado: ' + resultado + '</strong>';
+        resultadoElement.innerHTML = '<strong>Resultado: ' + esak.toFixed(2) + '</strong>';
     }
 
     // Função para atualizar a saída dos controles deslizantes
@@ -324,7 +356,7 @@
         // Exibe a mensagem na tela (pode ser adaptado para usar um modal)
         alert(mensagemContato);
     });
-    
+
 </script>
 
 </body>

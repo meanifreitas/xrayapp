@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/")
@@ -48,21 +47,6 @@ public class UsuarioController {
             model.addAttribute("error", "CPF ou senha inválidos");
             return "error";
         }
-    }
-
-    @GetMapping("/listar")
-    public String listaProdutos(@ModelAttribute Usuario usuario, Model model){
-        List<Usuario> listaUsuario = (List<Usuario>) usuarioRepository.findAll();
-        model.addAttribute("usuarios",listaUsuario);
-        return "listar";
-    }
-
-    @PostMapping ("/alterar")
-    public String alterarProduto (@ModelAttribute Usuario novoUsuario, Model model) {
-        usuarioRepository .save(novoUsuario);
-        List<Usuario> listaUsuario = (List<Usuario>) usuarioRepository .findAll();
-        model.addAttribute( "usuarios", listaUsuario );
-        return "listar" ;
     }
 
 }
