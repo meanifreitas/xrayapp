@@ -1,88 +1,324 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml" th:fragment="layout (conteudo)">
+<html lang="pt-br">
 <head>
+    <!-- Configurações do documento -->
     <meta charset="UTF-8">
-    <title>Login - CRUD SITE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Radiologia</title>
+    <!-- Importação do framework de estilo Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Estilos personalizados para os sliders -->
+    <style>
+        /* Estilos personalizados para os sliders */
+        .slider-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .slider-item {
+            margin-right: 20px;
+        }
+
+        .slider-label {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .slider {
+            width: 300px;
+            height: 10px; /* Aumentar a altura para sliders mais grossos */
+            -webkit-appearance: none;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px; /* Aumentar a largura para um polegar maior */
+            height: 20px; /* Aumentar a altura para um polegar maior */
+            border-radius: 50%;
+            background: #000000;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00cfb1;
+            cursor: pointer;
+        }
+
+        .output {
+            font-size: 1.4rem;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #3498db;
+        }
+
+        /* Tema escuro */
+        body.dark-theme {
+            background-color: #282c35;
+            color: #fff;
+        }
+
+        .navbar.dark-theme {
+            background-color: #21252b;
+            color: #fff;
+        }
+
+        /* Adicionar mais estilos de tema escuro conforme necessário */
+        .dark-theme .button {
+            background-color: #21252b;
+            color: #fff;
+        }
+
+        .dark-theme select {
+            background-color: #21252b;
+            color: #fff;
+        }
+
+        .dark-theme .input {
+            background-color: #21252b;
+            color: #fff;
+        }
+
+        .dark-theme .slider::-webkit-slider-thumb {
+            background: #fff;
+        }
+
+        .dark-theme .slider::-moz-range-thumb {
+            background: #fff;
+        }
+    </style>
 </head>
 <body>
-<header>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand is-flex is-align-items-center">
+
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                RadEASKCalc.com
+            </h1>
         </div>
+    </div>
+</section>
 
-        <div class="navbar-menu">
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a>
-                            <!-- Botão descomentado para alternar o tema: <button class="button" onclick="toggleTheme()">Alternar Tema</button> -->
-                        </a>
-                        <a class="button" href="#">
-                            Ajuda
-                        </a>
-                        <a id="contatoButton" class="button" href="#">
-                            Contato
-                        </a>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand is-flex is-align-items-center">
+    </div>
 
+    <div class="navbar-menu">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a>
+                        <!-- Botão descomentado para alternar o tema: <button class="button" onclick="toggleTheme()">Alternar Tema</button> -->
+                    </a>
+                    <a class="button" href="#">
+                        Ajuda
+                    </a>
+                    <a id="contatoButton" class="button" href="#">
+                        Contato
+                    </a>
+                    <a id="logoutButton" class="button is-danger" href="#">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Seção de entrada de dados -->
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <div class="form-container">
+            <!-- Campo para selecionar a região -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Região:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="regiao">
+                                    <option value="cabeça">Cabeça</option>
+                                    <option value="torax">Tórax</option>
+                                    <option value="perna">Perna</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campo para selecionar a projeção -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Projeção:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="projecao">
+                                    <option value="frontal">Frontal</option>
+                                    <option value="lateral">Lateral</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campo para inserir a espessura -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Espessura:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" id="espessura" class="input" placeholder="Digite a espessura em mm">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    RadEASKCalc.com
-                </h1>
+    </div>
+</div>
+
+<!-- Seção de configurações -->
+<div class="config-container">
+    <h2 style="text-align: center; font-size: 1.5rem; font-weight: bold;">Configurações:</h2>
+
+    <!-- Controles deslizantes para K.V, M.S, e M.A -->
+    <div class="slider-container is-flex is-justify-content-center" style="margin-bottom: 10px;">
+        <div class="slider-item" style="margin-right: 10px;">
+            <label for="kvInput"><strong>K.V:</strong></label>
+            <div class="is-flex is-flex-direction-column is-align-items-center">
+                <input type="range" id="kvInput" class="slider" min="0" max="200" value="100" style="width: 300px;">
+                <output id="kvOutput" style="font-size: 1.2rem;"><strong> 100 </strong></output>
             </div>
         </div>
-    </section>
-</header>
-<section class="hero is-light is-fullheight">
-    <div class="hero-body">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="#" th:action="@{/cadastrar}" th:object="${usuario}">
+
+        <div class="slider-item" style="margin-right: 10px;">
+            <label for="msInput"><strong>M.S:</strong></label>
+            <div class="is-flex is-flex-direction-column is-align-items-center">
+                <input type="range" id="msInput" class="slider" min="0" max="200" value="100" style="width: 300px;">
+                <output id="msOutput" style="font-size: 1.2rem;"><strong> 100 </strong></output>
+            </div>
+        </div>
+
+        <div class="slider-item">
+            <label for="maInput"><strong>M.A:</strong></label>
+            <div class="is-flex is-flex-direction-column is-align-items-center">
+                <!-- Adição do atributo 'disabled' para tornar o slider não interativo -->
+                <input type="range" id="maInput" class="slider" min="0" max="200" value="200" style="width: 300px;" disabled>
+                <output id="maOutput" style="font-size: 1.2rem;"><strong> 200 </strong></output>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adicione o botão de cálculo e o resultado -->
+    <div class="columns is-mobile is-centered">
+        <div class="column is-half">
+            <div class="form-container">
+                <!-- Adiciona o botão de cálculo -->
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <!-- Espaço reservado para o botão de cálculo -->
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Nome</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Nome" th:field:="*{nome}" required>
+                                <button class="button is-primary" onclick="calcular()">Calcular</button>
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label">CPF</label>
-                            <div class="control">
-                                <input class="input" type="text" placeholder="CPF" th:field:="*{cpf}" required>
-                            </div>
-                        </div>
-                        aaaaaa
-                        <div class="field">
-                            <label class="label">Senha</label>
-                            <div class="control">
-                                <input class="input" type="password" placeholder="Sua senha" th:field="*{senha}" required>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+
+                <!-- Adiciona o resultado do cálculo -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Resultado:</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <button type="submit" class="button is-primary is-fullwidth">Cadastrar</button>
+                                <div id="resultado" class="output"></div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<footer class="footer">
-    <div class="content has-text-centered">
-    </div>
-</footer>
+</div>
+
+<!-- Script JavaScript para cálculo e atualização do resultado -->
 <script>
-    // Adiciona um ouvinte de evento para o botão de contato
-    document.getElementById('contatoButton').addEventListener('click', function() {
+    // Função para realizar o cálculo
+    function calcular() {
+        // Obter os valores dos sliders e da espessura
+        var kv = parseInt(document.getElementById('kvInput').value);
+        var ms = parseInt(document.getElementById('msInput').value);
+        var ma = parseInt(document.getElementById('maInput').value);
+        var espessura = parseFloat(document.getElementById('espessura').value.replace(',', '.'));
+
+        // Chame a função de cálculo desejada aqui
+        // Exemplo: var resultado = calcularResultado(kv, ms, ma, espessura);
+
+        // Exemplo de exibição do resultado
+        var resultadoElement = document.getElementById('resultado');
+        resultadoElement.innerHTML = '<strong>Resultado: ' + resultado + '</strong>';
+    }
+
+    // Função para atualizar a saída dos controles deslizantes
+    function updateOutput(elementId) {
+        var outputElement = document.getElementById(elementId + 'Output');
+        var rangeElement = document.getElementById(elementId + 'Input');
+        outputElement.innerHTML = rangeElement.value;
+    }
+
+    // Adiciona ouvintes de eventos para os controles deslizantes K.V, M.S e M.A
+    document.getElementById('kvInput').addEventListener('input', function () {
+        updateOutput('kv');
+    });
+
+    document.getElementById('msInput').addEventListener('input', function () {
+        updateOutput('ms');
+    });
+
+    document.getElementById('maInput').addEventListener('input', function () {
+        updateOutput('ma');
+    });
+
+    // Adiciona ouvinte de evento para a entrada de espessura
+    var espessuraInput = document.getElementById('espessura');
+    espessuraInput.addEventListener('input', function () {
+        // Remove caracteres não numéricos
+        var inputValue = espessuraInput.value.replace(/[^\d.]/g, '');
+        // Formata o valor numérico com vírgulas
+        var formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        // Atualiza o valor de entrada com o valor formatado
+        espessuraInput.value = formattedValue;
+
+        // Converte para milímetros e atualiza a saída
+        var espessuraOutput = document.getElementById('espessuraOutput');
+        espessuraOutput.innerHTML = '<strong> ' + (formattedValue / 10) + ' mm</strong>';
+    });
+
+    document.getElementById('contatoButton').addEventListener('click', function () {
         // Mensagem de contato dos criadores
         var mensagemContato = "Criadores:\n\nRoger da Palma - Email rogerdapalma@gmail.com\n" +
             "Meani Freitas - Email meani.sf@gmail.com " + "\nGuilherme Painko - Email gui.painko2393@gmail.com ";
@@ -91,6 +327,16 @@
         alert(mensagemContato);
     });
 
+    // Função para alternar o tema escuro
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+        document.querySelector('.navbar').classList.toggle('dark-theme');
+    }
+    document.getElementById('logoutButton').addEventListener('click', function () {
+        // Redireciona para a página index.html
+        window.location.href = 'index.html';
+    });
 </script>
+
 </body>
 </html>

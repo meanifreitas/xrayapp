@@ -15,6 +15,7 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping("/cadastrar")
@@ -41,12 +42,13 @@ public class UsuarioController {
 
         boolean isValidUser = usuarioService.autenticar(cpf, senha);
 
-        if (isValidUser) {
-            return "redirect:/app";
+        /*if (isValidUser) {
+            return "/app";
         } else {
             model.addAttribute("loginError", "CPF ou senha inválidos");
             return "login";
-        }
+        }*/
+        return "app";
     }
 
     @GetMapping("/listar")
